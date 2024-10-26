@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open YouTube Video</title>
-    <script>
-        function openYouTubeVideo() {
-            // Get the video ID from the URL parameter
-            const videoId = new URLSearchParams(window.location.search).get('videoId') || 'DypOdUEtHXA'; // Default video ID
-            const bitlyLink = 'https://trafficmediad.com/4fjhXDP'; // Replace with your Bitly link that points to the YouTube video
-            const youtubeAppURL = 'vnd.youtube:' + videoId; // Intent URL for the YouTube app
+<script type="text/javascript">
+var urls = new Array();
+ 
+urls[0] = "https://trafficmediad.com/4f030qj";
 
-            // Try to open the YouTube app
-            window.location.href = youtubeAppURL;
-
-            // Fallback to Bitly link after a short delay
-            setTimeout(() => {
-                window.location.href = bitlyLink; // Redirect to Bitly link
-            }, 300); // Delay for redirection
-        }
-
-        window.onload = openYouTubeVideo; // Call the function on page load
-    </script>
-</head>
-<body style="margin: 0; opacity: 0;"></body>
-</html>
+  
+var random = Math.floor(Math.random()*urls.length);
+window.location = urls[random];
+</script> 
