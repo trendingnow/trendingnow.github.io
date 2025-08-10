@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HomePlate</title>
+  <style>
+    body { font-family: sans-serif; background: #fbf6ef; margin: 0; padding: 0; display: flex; justify-content: center; }
+    .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.2); overflow: hidden; position: relative; }
+    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; overflow-y: auto; }
+    .active { display: flex; flex-direction: column; justify-content: space-between; }
+    h1, h2, h3 { text-align: center; }
+    p { margin-top: 10px; color: #555; text-align: center; }
+    .button { display: inline-block; margin: 10px; padding: 12px 20px; background: #ff9a1a; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; }
+    input, select { width: 90%; padding: 10px; margin: 10px auto; border-radius: 8px; border: 2px solid #ccc; display: block; }
+    .ingredients { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+    .ingredient-card { background: #f7f1df; padding: 10px; border-radius: 12px; text-align: center; width: 45%; }
+    .stars { margin-top: 10px; text-align: center; }
+    .star { color: #ffb23a; font-size: 20px; }
+    .nav { display: flex; justify-content: space-between; padding: 10px; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="page active" id="page1">
+      <div>
+        <h1>HomePlate</h1>
+        <p>"Bringing comfort and confidence back into the kitchen — one easy recipe at a time!"</p>
+      </div>
+      <div class="nav">
+        <span></span>
+        <div class="button" onclick="showPage(2)">Next ➡️</div>
+      </div>
+    </div>
+
+    <div class="page" id="page2">
+      <div>
+        <h2>Sign Up</h2>
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <label>Cooking Experience Level</label>
+        <select>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Expert</option>
+        </select>
+      </div>
+      <div class="nav">
+        <div class="button" onclick="showPage(1)">⬅️ Back</div>
+        <div class="button" onclick="showPage(3)">Next ➡️</div>
+      </div>
+    </div>
+
+    <div class="page" id="page3">
+      <div>
+        <h2>Hi, Jasmine</h2>
+        <p>What's in my kitchen?</p>
+        <input type="text" placeholder="Search raw ingredients (e.g. eggs, milk, flour)" />
+        <div class="ingredients">
+          <div class="ingredient-card">Eggs</div>
+          <div class="ingredient-card">Milk</div>
+          <div class="ingredient-card">Flour</div>
+          <div class="ingredient-card">Sugar</div>
+          <div class="ingredient-card">Butter</div>
+          <div class="ingredient-card">Salt</div>
+          <div class="ingredient-card">Tomatoes</div>
+          <div class="ingredient-card">Onions</div>
+          <div class="ingredient-card">Chicken</div>
+          <div class="ingredient-card">Rice</div>
+        </div>
+        <h3>French Toast</h3>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="button" onclick="showPage(4)">Cook Again!</div>
+      </div>
+      <div class="nav">
+        <div class="button" onclick="showPage(2)">⬅️ Back</div>
+        <div class="button" onclick="showPage(4)">Next ➡️</div>
+      </div>
+    </div>
+
+    <div class="page" id="page4">
+      <div>
+        <h2>Step-by-Step</h2>
+        <p>🧅 Chop the onions finely</p>
+        <div style="text-align:center;">
+          <button class="button" onclick="alert('Playing video...')">▶️ Play Video</button>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="button" onclick="showPage(3)">⬅️ Back</div>
+        <div class="button" onclick="alert('Next step...')">Next ➡️</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
+    }
+  </script>
+</body>
+</html>
