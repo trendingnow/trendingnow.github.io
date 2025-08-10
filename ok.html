@@ -1,9 +1,131 @@
-<script type="text/javascript">
-var urls = new Array();
- 
-urls[0] = "https://bit.ly/3Dn8WfI";
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HomePlate — Demo</title>
+  <style>
+    /* Basic reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#fbf6ef; padding:30px; color:#222}
 
-  
-var random = Math.floor(Math.random()*urls.length);
-window.location = urls[random];
-</script> 
+    /* Container for the three phone mockups */
+    .phones{display:flex;gap:20px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+    .phone{width:260px;height:520px;border-radius:28px;padding:18px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 10px 25px rgba(30,30,30,0.08);border:8px solid #1112;position:relative}
+
+    /* notch */
+    .phone::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:6px;width:120px;height:28px;background:transparent;border-radius:14px}
+
+    /* shared card style */
+    .screen{height:100%;display:flex;flex-direction:column}
+
+    /* Left - Splash */
+    .logo{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:22px}
+    .logo .badge{width:86px;height:86px;border-radius:48px;border:6px solid #dfe7d8;display:flex;align-items:center;justify-content:center;background:#fff}
+    .logo .badge svg{width:40px;height:40px}
+    .app-name{font-size:22px;margin-top:6px;font-weight:600;color:#2d2c2a}
+    .tag{margin-top:10px;font-size:13px;color:#555;line-height:1.25;padding:0 8px;text-align:center}
+    .cta{margin-top:auto;padding:18px 12px;background:#ff9a1a;color:#fff;border-radius:12px;text-align:center;font-weight:700;cursor:pointer;margin-bottom:8px}
+
+    /* Middle - Levels */
+    .title{margin-top:18px;font-size:20px;font-weight:800;text-align:center}
+    .levels{display:flex;flex-direction:column;gap:12px;margin-top:22px;align-items:center}
+    .btn-level{width:75%;padding:12px 10px;border-radius:14px;border:3px solid #e6e0d6;text-align:center;font-weight:700;background:#fbf7ef}
+
+    /* Right - Home */
+    .greet{font-size:18px;font-weight:700}
+    .search{margin-top:12px;display:flex;gap:8px}
+    .search input{flex:1;padding:10px;border-radius:10px;border:2px solid #dcd5c9}
+    .search .green{padding:10px 12px;border-radius:10px;background:#2f7a3e;color:#fff;white-space:nowrap;border:none}
+    .ingredients{display:flex;gap:10px;margin-top:14px}
+    .card{background:#f7f1df;padding:10px;border-radius:12px;flex:1;text-align:center}
+    .card img{width:56px;height:36px;object-fit:cover;border-radius:8px}
+    .recipe{margin-top:14px}
+    .recipe h3{font-size:16px;margin-bottom:8px}
+    .stars{display:flex;gap:4px}
+    .star{width:22px;height:22px;border-radius:4px;background:#ffb23a;display:inline-block}
+
+    /* tiny responsive */
+    @media (max-width:840px){.phones{transform:scale(0.95)}}
+    @media (max-width:720px){.phones{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+  <div style="max-width:980px;margin:0 auto;">
+    <h2 style="text-align:center;margin-bottom:18px;font-weight:800;color:#3b3a38">HomePlate — Simple Demo (Mobile style)</h2>
+
+    <div class="phones">
+      <!-- Left phone (Splash) -->
+      <div class="phone">
+        <div class="screen">
+          <div class="logo">
+            <div class="badge">
+              <!-- simple chef icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3c2.5 0 4.5 1.74 4.5 3.9 0 1.792-1.25 3.3-3 3.7v.4c0 .83-.67 1.5-1.5 1.5S10.5 10.83 10.5 10v-.4c-1.75-.4-3-1.908-3-3.7C7.5 4.74 9.5 3 12 3z" stroke="#f39c12" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 15c0 2.76 3.582 5 5 5s5-2.24 5-5v-1H7v1z" stroke="#2d6a36" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="app-name">HomePlate</div>
+            <div class="tag">"Bringing comfort and confidence back into the kitchen — one easy recipe at a time!"</div>
+          </div>
+          <div class="cta" onclick="alert('Get Started clicked')">Get Started</div>
+        </div>
+      </div>
+
+      <!-- Middle phone (Levels) -->
+      <div class="phone">
+        <div class="screen">
+          <div class="title">Set Cooking Level!</div>
+          <div class="levels">
+            <div class="btn-level">Newbie</div>
+            <div class="btn-level">Familiar</div>
+            <div class="btn-level">Experienced</div>
+          </div>
+          <div style="margin-top:auto;font-size:12px;color:#999;text-align:center;padding-bottom:12px">Swipe or tap a level to continue</div>
+        </div>
+      </div>
+
+      <!-- Right phone (Home) -->
+      <div class="phone">
+        <div class="screen">
+          <div>
+            <div class="greet">Hi, Jasmine</div>
+            <div style="margin-top:8px;font-size:13px;color:#666">What's in my kitchen?</div>
+            <div class="search">
+              <input placeholder="Search ingredients" />
+              <button class="green">Search</button>
+            </div>
+
+            <div class="ingredients">
+              <div class="card">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><rect width='100%' height='100%' rx='8' fill='%23f5e6c6'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23c44'>Egg</text></svg>" alt="egg" />
+                <div style="font-weight:700;margin-top:6px">Egg sandwich</div>
+              </div>
+              <div class="card">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><rect width='100%' height='100%' rx='8' fill='%23fde3d6'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23c44'>Tomato</text></svg>" alt="tomato" />
+                <div style="font-weight:700;margin-top:6px">Tomato Toast</div>
+              </div>
+            </div>
+
+            <div class="recipe">
+              <h3>French Toast</h3>
+              <div class="stars">
+                <span class="star"></span>
+                <span class="star"></span>
+                <span class="star"></span>
+                <span class="star"></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;color:#666;margin-top:18px;font-size:13px">Ye ek simple static demo hai. Code ko "index.html" ke naam se save karke browser me khol lo.</p>
+  </div>
+
+</body>
+</html>
