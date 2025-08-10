@@ -1,122 +1,170 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple Cooking Module</title>
-  <style>
-    body { font-family: sans-serif; background: #f9f9f9; margin: 0; padding: 0; display: flex; justify-content: center; }
-    .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
-    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; }
-    .active { display: flex; flex-direction: column; justify-content: space-between; }
-    h1, h2, p { text-align: center; }
-    .button { margin: 10px; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; flex: 1; text-align: center; }
-    .nav { display: flex; justify-content: space-between; }
-    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-    .ingredients, .meal-days, .grocery-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .ingredient-card, .day-card, .grocery-item { flex: 1 1 45%; background: #eee; padding: 8px; border-radius: 5px; text-align: center; }
-    .grocery-item.checked { background: #c8e6c9; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Homeplate</title>
+<style>
+  body { font-family: sans-serif; background: #f9f9f9; margin: 0; padding: 0; display: flex; justify-content: center; }
+  .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+  .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; }
+  .active { display: flex; flex-direction: column; justify-content: space-between; }
+  h1, h2, p { text-align: center; }
+  .button { margin: 10px; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; flex: 1; text-align: center; }
+  .nav { display: flex; justify-content: space-between; }
+  input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+  .ingredients, .meal-days, .grocery-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ingredient-card, .day-card, .grocery-item { flex: 1 1 45%; background: #eee; padding: 8px; border-radius: 5px; text-align: center; }
+  .grocery-item.checked { background: #c8e6c9; }
+</style>
 </head>
 <body>
-  <div class="phone">
-    <div class="page active" id="page1">
-      <h1>Weekly Meal Planner</h1>
-      <div class="meal-days">
-        <div class="day-card">Fri - Pasta</div>
-        <div class="day-card">Sat - Wrap</div>
-        <div class="day-card">Sun - Smoothie</div>
-      </div>
-      <div class="nav">
-        <span></span>
-        <button class="button" onclick="showPage(2)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page2">
-      <h2>Smart Grocery List</h2>
-      <div class="grocery-list">
-        <div class="grocery-item checked">Food</div>
-        <div class="grocery-item checked">Chicken</div>
-        <div class="grocery-item checked">Yogurt</div>
-        <div class="grocery-item checked">Rice</div>
-      </div>
-      <div class="nav">
-        <button class="button" onclick="showPage(1)">⬅️ Back</button>
-        <button class="button" onclick="showPage(3)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page3">
-      <h2>Ingredients</h2>
-      <input type="text" placeholder="Search raw ingredients" />
-      <div class="ingredients">
-        <div class="ingredient-card">Eggs</div>
-        <div class="ingredient-card">Milk</div>
-        <div class="ingredient-card">Flour</div>
-        <div class="ingredient-card">Onions</div>
-        <div class="ingredient-card">Tomatoes</div>
-        <div class="ingredient-card">Chicken</div>
-        <div class="ingredient-card">Garlic</div>
-        <div class="ingredient-card">Spinach</div>
-      </div>
-      <div class="nav">
-        <button class="button" onclick="showPage(2)">⬅️ Back</button>
-        <button class="button" onclick="showPage(4)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page4">
-      <h2>Step-by-Step</h2>
-      <p>🧅 Chop the onions finely</p>
-      <div class="nav">
-        <button class="button" onclick="showPage(3)">⬅️ Back</button>
-        <button class="button" onclick="showPage(5)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page5">
-      <h2>Step 2</h2>
-      <p>🍅 Slice the tomatoes</p>
-      <div class="nav">
-        <button class="button" onclick="showPage(4)">⬅️ Back</button>
-        <button class="button" onclick="showPage(6)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page6">
-      <h2>Step 3</h2>
-      <p>🍗 Marinate the chicken</p>
-      <div class="nav">
-        <button class="button" onclick="showPage(5)">⬅️ Back</button>
-        <button class="button" onclick="showPage(7)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page7">
-      <h2>Step 4</h2>
-      <p>🍳 Cook everything together</p>
-      <div class="nav">
-        <button class="button" onclick="showPage(6)">⬅️ Back</button>
-        <button class="button" onclick="showPage(8)">Next ➡️</button>
-      </div>
-    </div>
-
-    <div class="page" id="page8">
-      <h2>Serving</h2>
-      <p>🍽 Serve hot with bread or rice</p>
-      <div class="nav">
-        <button class="button" onclick="showPage(7)">⬅️ Back</button>
-        <button class="button" onclick="alert('Recipe complete!')">Finish ✅</button>
-      </div>
+<div class="phone">
+  <div class="page active" id="page1">
+    <h1>Signup</h1>
+    <input type="text" placeholder="Username" />
+    <input type="password" placeholder="Password" />
+    <div class="nav">
+      <span></span>
+      <button class="button" onclick="showPage(2)">Next ➡️</button>
     </div>
   </div>
 
-  <script>
-    function showPage(num) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page' + num).classList.add('active');
-    }
-  </script>
+  <div class="page" id="page2">
+    <h1>Home Page</h1>
+    <p>Welcome to Homeplate</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(1)">⬅️ Back</button>
+      <button class="button" onclick="showPage(3)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page3">
+    <h2>Ingredients</h2>
+    <input type="text" placeholder="Search raw ingredients" />
+    <div class="ingredients">
+      <div class="ingredient-card">Eggs</div>
+      <div class="ingredient-card">Milk</div>
+      <div class="ingredient-card">Flour</div>
+      <div class="ingredient-card">Onions</div>
+      <div class="ingredient-card">Tomatoes</div>
+      <div class="ingredient-card">Chicken</div>
+      <div class="ingredient-card">Garlic</div>
+      <div class="ingredient-card">Spinach</div>
+    </div>
+    <div class="nav">
+      <button class="button" onclick="showPage(2)">⬅️ Back</button>
+      <button class="button" onclick="showPage(4)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page4">
+    <h2>Extra Page 1</h2>
+    <p>Content from photo 1</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(3)">⬅️ Back</button>
+      <button class="button" onclick="showPage(5)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page5">
+    <h2>Extra Page 2</h2>
+    <p>Content from photo 2</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(4)">⬅️ Back</button>
+      <button class="button" onclick="showPage(6)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page6">
+    <h2>Extra Page 3</h2>
+    <p>Content from photo 3</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(5)">⬅️ Back</button>
+      <button class="button" onclick="showPage(7)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page7">
+    <h2>Weekly Meal Planner</h2>
+    <div class="meal-days">
+      <div class="day-card">Fri - Pasta</div>
+      <div class="day-card">Sat - Wrap</div>
+      <div class="day-card">Sun - Smoothie</div>
+    </div>
+    <div class="nav">
+      <button class="button" onclick="showPage(6)">⬅️ Back</button>
+      <button class="button" onclick="showPage(8)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page8">
+    <h2>Smart Grocery List</h2>
+    <div class="grocery-list">
+      <div class="grocery-item checked">Food</div>
+      <div class="grocery-item checked">Chicken</div>
+      <div class="grocery-item checked">Yogurt</div>
+      <div class="grocery-item checked">Rice</div>
+    </div>
+    <div class="nav">
+      <button class="button" onclick="showPage(7)">⬅️ Back</button>
+      <button class="button" onclick="showPage(9)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page9">
+    <h2>Step 1</h2>
+    <p>🧅 Chop the onions finely</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(8)">⬅️ Back</button>
+      <button class="button" onclick="showPage(10)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page10">
+    <h2>Step 2</h2>
+    <p>🍅 Slice the tomatoes</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(9)">⬅️ Back</button>
+      <button class="button" onclick="showPage(11)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page11">
+    <h2>Step 3</h2>
+    <p>🍗 Marinate the chicken</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(10)">⬅️ Back</button>
+      <button class="button" onclick="showPage(12)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page12">
+    <h2>Step 4</h2>
+    <p>🍳 Cook everything together</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(11)">⬅️ Back</button>
+      <button class="button" onclick="showPage(13)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div class="page" id="page13">
+    <h2>Serving</h2>
+    <p>🍽 Serve hot with bread or rice</p>
+    <div class="nav">
+      <button class="button" onclick="showPage(12)">⬅️ Back</button>
+      <button class="button" onclick="alert('Recipe complete!')">Finish ✅</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(num) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + num).classList.add('active');
+}
+</script>
 </body>
 </html>
+```
