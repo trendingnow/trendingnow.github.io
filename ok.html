@@ -13,12 +13,13 @@
     h1, h2, h3 { text-align: center; }
     p { margin-top: 10px; color: #555; text-align: center; }
     .button { display: inline-block; margin: 10px; padding: 12px 20px; background: #ff9a1a; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; }
-    input { width: 90%; padding: 10px; margin: 10px auto; border-radius: 8px; border: 2px solid #ccc; display: block; }
+    input, select { width: 90%; padding: 10px; margin: 10px auto; border-radius: 8px; border: 2px solid #ccc; display: block; }
     .ingredients { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
     .card { background: #f7f1df; padding: 10px; border-radius: 12px; text-align: center; width: 45%; }
     .stars { margin-top: 10px; text-align: center; }
     .star { color: #ffb23a; font-size: 20px; }
     .nav { display: flex; justify-content: space-between; padding: 10px; }
+    .cook-again { background: #28a745; color: white; }
   </style>
 </head>
 <body>
@@ -43,6 +44,12 @@
         <input type="text" placeholder="Full Name" />
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
+        <label>Cooking Experience Level</label>
+        <select>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Expert</option>
+        </select>
       </div>
       <div class="nav">
         <div class="button" onclick="showPage(1)">⬅️ Back</div>
@@ -61,11 +68,44 @@
           <div class="card">🍅<br>Tomato Toast</div>
         </div>
         <h3>French Toast</h3>
-        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="button cook-again">Cook Again!</div>
       </div>
       <div class="nav">
         <div class="button" onclick="showPage(2)">⬅️ Back</div>
-        <span></span>
+        <div class="button" onclick="showPage(4)">Next ➡️</div>
+      </div>
+    </div>
+
+    <!-- Page 4 (placeholder for clarity) -->
+    <div class="page" id="page4">
+      <div>
+        <h2>Weekly Planner</h2>
+        <div style="text-align:center;">
+          <div class="button" style="margin-bottom:10px;">⬅️</div>
+          <span>Mon Tue Wed Thu Fri Sat Sun</span>
+          <div class="button" style="margin-top:10px;">➡️</div>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="button" onclick="showPage(3)">⬅️ Back</div>
+        <div class="button" onclick="showPage(5)">Next ➡️</div>
+      </div>
+    </div>
+
+    <!-- Page 5 -->
+    <div class="page" id="page5">
+      <div>
+        <h2>Grocery List</h2>
+        <ul>
+          <li>Milk</li>
+          <li>Eggs</li>
+        </ul>
+        <div class="button" style="background:#007bff;">Add Item</div>
+      </div>
+      <div class="nav">
+        <div class="button" onclick="showPage(4)">⬅️ Back</div>
+        <div class="button" onclick="showPage(1)">🏠 Menu</div>
       </div>
     </div>
   </div>
