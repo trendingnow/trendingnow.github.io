@@ -3,80 +3,111 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HomePlate</title>
+  <title>Homeplate</title>
   <style>
-    body { font-family: sans-serif; background: #fbf6ef; margin: 0; padding: 0; display: flex; justify-content: center; }
-    .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.2); overflow: hidden; position: relative; }
-    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; overflow-y: auto; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; display: flex; justify-content: center; }
+    .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; }
     .active { display: flex; flex-direction: column; justify-content: space-between; }
-    h1, h2, h3 { text-align: center; }
-    p { margin-top: 10px; color: #555; text-align: center; }
-    .button { display: inline-block; margin: 10px; padding: 12px 20px; background: #ff9a1a; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; }
-    input, select { width: 90%; padding: 10px; margin: 10px auto; border-radius: 8px; border: 2px solid #ccc; display: block; }
-    .ingredients { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
-    .ingredient-card { background: #f7f1df; padding: 10px; border-radius: 12px; text-align: center; width: 45%; }
-    .stars { margin-top: 10px; text-align: center; }
-    .star { color: #ffb23a; font-size: 20px; }
-    .nav { display: flex; justify-content: space-between; padding: 10px; }
-    .cook-again { background: #28a745; color: white; }
+    h1, h2, p { text-align: center; margin: 0 0 10px; }
+    .button { margin: 10px; padding: 12px; background: linear-gradient(45deg, #ff7e5f, #feb47b); color: white; border: none; border-radius: 8px; cursor: pointer; flex: 1; text-align: center; font-weight: bold; }
+    .nav { display: flex; justify-content: space-between; }
+    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+    .ingredients, .meal-days, .grocery-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ingredient-card, .day-card, .grocery-item { flex: 1 1 45%; background: #eee; padding: 8px; border-radius: 5px; text-align: center; }
+    .grocery-item.checked { background: #c8e6c9; }
   </style>
 </head>
 <body>
   <div class="phone">
+    <!-- Signup Page -->
     <div class="page active" id="page1">
-      <div>
-        <h1>HomePlate</h1>
-        <p>"Bringing comfort and confidence back into the kitchen — one easy recipe at a time!"</p>
-      </div>
+      <h1>🍽 Welcome to Homeplate</h1>
+      <input type="text" placeholder="Enter your name" />
+      <input type="email" placeholder="Enter your email" />
+      <input type="password" placeholder="Enter your password" />
       <div class="nav">
         <span></span>
-        <div class="button" onclick="showPage(2)">Next ➡️</div>
+        <button class="button" onclick="showPage(2)">Get Started ➡️</button>
       </div>
     </div>
 
+    <!-- Weekly Meal Planner -->
     <div class="page" id="page2">
-      <div>
-        <h2>Sign Up</h2>
-        <input type="text" placeholder="Full Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <label>Cooking Experience Level</label>
-        <select>
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Expert</option>
-        </select>
+      <h2>Weekly Meal Planner</h2>
+      <div class="meal-days">
+        <div class="day-card">Fri - Pasta</div>
+        <div class="day-card">Sat - Wrap</div>
+        <div class="day-card">Sun - Smoothie</div>
       </div>
       <div class="nav">
-        <div class="button" onclick="showPage(1)">⬅️ Back</div>
-        <div class="button" onclick="showPage(3)">Next ➡️</div>
+        <button class="button" onclick="showPage(1)">⬅️ Back</button>
+        <button class="button" onclick="showPage(3)">Next ➡️</button>
       </div>
     </div>
 
+    <!-- Grocery List -->
     <div class="page" id="page3">
-      <div>
-        <h2>Hi, Jasmine</h2>
-        <p>What's in my kitchen?</p>
-        <input type="text" placeholder="Search raw ingredients (e.g. eggs, milk, flour)" />
-        <div class="ingredients">
-          <div class="ingredient-card">Eggs</div>
-          <div class="ingredient-card">Milk</div>
-          <div class="ingredient-card">Flour</div>
-          <div class="ingredient-card">Sugar</div>
-          <div class="ingredient-card">Butter</div>
-          <div class="ingredient-card">Salt</div>
-          <div class="ingredient-card">Tomatoes</div>
-          <div class="ingredient-card">Onions</div>
-          <div class="ingredient-card">Chicken</div>
-          <div class="ingredient-card">Rice</div>
-        </div>
-        <h3>French Toast</h3>
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-        <div class="button cook-again">Cook Again!</div>
+      <h2>Smart Grocery List</h2>
+      <div class="grocery-list">
+        <div class="grocery-item checked">Food</div>
+        <div class="grocery-item checked">Chicken</div>
+        <div class="grocery-item checked">Yogurt</div>
+        <div class="grocery-item checked">Rice</div>
       </div>
       <div class="nav">
-        <div class="button" onclick="showPage(2)">⬅️ Back</div>
-        <div class="button" onclick="showPage(1)">🏠 Menu</div>
+        <button class="button" onclick="showPage(2)">⬅️ Back</button>
+        <button class="button" onclick="showPage(4)">Next ➡️</button>
+      </div>
+    </div>
+
+    <!-- Ingredients Page -->
+    <div class="page" id="page4">
+      <h2>Ingredients</h2>
+      <input type="text" placeholder="Search raw ingredients" />
+      <div class="ingredients">
+        <div class="ingredient-card">Eggs</div>
+        <div class="ingredient-card">Milk</div>
+        <div class="ingredient-card">Flour</div>
+        <div class="ingredient-card">Onions</div>
+        <div class="ingredient-card">Tomatoes</div>
+        <div class="ingredient-card">Chicken</div>
+        <div class="ingredient-card">Garlic</div>
+        <div class="ingredient-card">Spinach</div>
+      </div>
+      <div class="nav">
+        <button class="button" onclick="showPage(3)">⬅️ Back</button>
+        <button class="button" onclick="showPage(5)">Next ➡️</button>
+      </div>
+    </div>
+
+    <!-- Extra Page 1 -->
+    <div class="page" id="page5">
+      <h2>Cooking Tip</h2>
+      <p>🔥 Always preheat your pan for better flavor!</p>
+      <div class="nav">
+        <button class="button" onclick="showPage(4)">⬅️ Back</button>
+        <button class="button" onclick="showPage(6)">Next ➡️</button>
+      </div>
+    </div>
+
+    <!-- Extra Page 2 -->
+    <div class="page" id="page6">
+      <h2>Quick Snack Idea</h2>
+      <p>🥗 Toss fresh veggies with olive oil & herbs.</p>
+      <div class="nav">
+        <button class="button" onclick="showPage(5)">⬅️ Back</button>
+        <button class="button" onclick="showPage(7)">Next ➡️</button>
+      </div>
+    </div>
+
+    <!-- Final Page -->
+    <div class="page" id="page7">
+      <h2>You're Ready!</h2>
+      <p>✅ Your kitchen adventure starts now.</p>
+      <div class="nav">
+        <button class="button" onclick="showPage(6)">⬅️ Back</button>
+        <button class="button" onclick="alert('All set!')">Finish 🎉</button>
       </div>
     </div>
   </div>
