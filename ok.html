@@ -7,19 +7,18 @@
   <style>
     body { font-family: sans-serif; background: #fbf6ef; margin: 0; padding: 0; display: flex; justify-content: center; }
     .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.2); overflow: hidden; position: relative; }
-    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; }
+    .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; overflow-y: auto; }
     .active { display: flex; flex-direction: column; justify-content: space-between; }
     h1, h2, h3 { text-align: center; }
     p { margin-top: 10px; color: #555; text-align: center; }
     .button { display: inline-block; margin: 10px; padding: 12px 20px; background: #ff9a1a; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; }
     input, select { width: 90%; padding: 10px; margin: 10px auto; border-radius: 8px; border: 2px solid #ccc; display: block; }
     .ingredients { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
-    .card { background: #f7f1df; padding: 10px; border-radius: 12px; text-align: center; width: 45%; }
+    .ingredient-card { background: #f7f1df; padding: 10px; border-radius: 12px; text-align: center; width: 45%; }
     .stars { margin-top: 10px; text-align: center; }
     .star { color: #ffb23a; font-size: 20px; }
     .nav { display: flex; justify-content: space-between; padding: 10px; }
     .cook-again { background: #28a745; color: white; }
-    .add-item { background: #007bff; }
   </style>
 </head>
 <body>
@@ -61,14 +60,14 @@
       <div>
         <h2>Hi, Jasmine</h2>
         <p>What's in my kitchen?</p>
-        <input type="text" placeholder="Search ingredients" />
+        <input type="text" placeholder="Search raw ingredients (e.g. eggs, milk, flour)" />
         <div class="ingredients">
-          <div class="card">🥚<br>Egg Sandwich</div>
-          <div class="card">🍅<br>Tomato Toast</div>
-          <div class="card">🧅<br>Onion Rings</div>
-          <div class="card">🥔<br>Mashed Potatoes</div>
-          <div class="card">🥦<br>Broccoli Soup</div>
-          <div class="card">🧀<br>Cheese Omelette</div>
+          <div class="ingredient-card">Eggs</div>
+          <div class="ingredient-card">Milk</div>
+          <div class="ingredient-card">Flour</div>
+          <div class="ingredient-card">Sugar</div>
+          <div class="ingredient-card">Butter</div>
+          <div class="ingredient-card">Salt</div>
         </div>
         <h3>French Toast</h3>
         <div class="stars">⭐⭐⭐⭐⭐</div>
