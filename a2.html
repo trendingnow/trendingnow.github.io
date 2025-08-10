@@ -1,170 +1,328 @@
-```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Homeplate</title>
-<style>
-  body { font-family: sans-serif; background: #f9f9f9; margin: 0; padding: 0; display: flex; justify-content: center; }
-  .phone { width: 360px; height: 640px; background: #fff; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
-  .page { display: none; padding: 20px; height: 100%; box-sizing: border-box; }
-  .active { display: flex; flex-direction: column; justify-content: space-between; }
-  h1, h2, p { text-align: center; }
-  .button { margin: 10px; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; flex: 1; text-align: center; }
-  .nav { display: flex; justify-content: space-between; }
-  input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-  .ingredients, .meal-days, .grocery-list { display: flex; flex-wrap: wrap; gap: 8px; }
-  .ingredient-card, .day-card, .grocery-item { flex: 1 1 45%; background: #eee; padding: 8px; border-radius: 5px; text-align: center; }
-  .grocery-item.checked { background: #c8e6c9; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HomePlate Mini App</title>
+  <style>
+    :root{
+      --bg:#fff3dc;
+      --card:#f7c062;
+      --card-dark:#e8a12e;
+      --text:#3a2e1e;
+      --muted:#8a6f4e;
+      --accent:#ffb43c;
+      --success:#2e7d32;
+      --off:#d9c7a1;
+      --on:#7cc779;
+      --shadow:0 8px 16px rgba(0,0,0,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg); color:var(--text); display:flex; align-items:center; justify-content:center;
+    }
+
+    /* App frame */
+    .phone{width:min(420px,96vw); height:min(820px,96vh); background:#fff7e7; border:10px solid #111; border-radius:34px; box-shadow:0 20px 40px rgba(0,0,0,.18); overflow:hidden; position:relative}
+    .notch{height:24px; width:140px; background:#111; border-bottom-left-radius:16px; border-bottom-right-radius:16px; position:absolute; top:0; left:50%; transform:translateX(-50%)}
+
+    /* App chrome */
+    header{height:64px; display:flex; align-items:center; gap:10px; padding:0 16px; position:relative}
+    header button.back{appearance:none; border:0; background:transparent; font-size:28px; line-height:1; cursor:pointer; color:var(--muted)}
+    header h1{flex:1; text-align:center; font-size:28px; margin:0; font-weight:800; letter-spacing:.3px}
+
+    main{height:calc(100% - 64px - 64px); overflow:auto; padding:16px}
+    footer{height:64px; display:flex; align-items:center; justify-content:space-between; padding:12px 16px; gap:12px; border-top:1px dashed #e3cfa7}
+
+    .btn{appearance:none; border:0; cursor:pointer; padding:14px 18px; border-radius:16px; background:var(--card-dark); color:#fff; font-weight:700; box-shadow:var(--shadow); font-size:18px}
+    .btn.secondary{background:#f0d7aa; color:#604519}
+    .btn:active{transform:translateY(1px)}
+
+    /* Screens */
+    .screen{display:none; height:100%}
+    .screen.active{display:block}
+
+    .card{background:var(--card); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow);}
+    .center{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px}
+    .big{font-size:36px; font-weight:900}
+    .sub{font-size:14px; color:var(--muted)}
+
+    /* Dashboard */
+    .grid{display:grid; grid-template-columns:1fr; gap:14px}
+    .tile{display:flex; align-items:center; gap:12px; padding:16px; font-size:18px; border-radius:16px; background:#ffe0a6; box-shadow:var(--shadow); cursor:pointer}
+    .tile i{font-style:normal; font-weight:900; font-size:22px}
+
+    /* Customize */
+    .pref{font-size:22px; font-weight:800}
+    .tagwrap{display:flex; gap:10px; flex-wrap:wrap}
+    .tag{background:#ffe7bd; border:2px solid #f6c777; border-radius:24px; padding:8px 12px; cursor:pointer}
+    .tag.active{background:#ffd073}
+
+    /* Serve screen */
+    .slider{height:46px; border-radius:14px; background:#f6c777; position:relative; box-shadow:var(--shadow);}
+    .thumb{position:absolute; top:8px; left:10px; width:30px; height:30px; border-radius:999px; background:#d78300}
+    .gesture{display:flex; gap:36px; align-items:center; justify-content:center}
+    .arrow{width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:26px solid #e79f2a}
+    .finger{width:28px;height:36px;background:#eaa545;border-radius:10px}
+
+    /* Rating */
+    .stars{display:flex; gap:8px; justify-content:center}
+    .star{font-size:36px; cursor:pointer; filter:saturate(0.2)}
+    .star.active{filter:saturate(1)}
+    textarea{width:100%; min-height:120px; resize:vertical; border-radius:14px; border:2px solid #f2c87b; padding:12px; background:#fffaf0}
+
+    /* Settings */
+    .list{display:flex; flex-direction:column; gap:12px}
+    .row{display:flex; align-items:center; justify-content:space-between; padding:16px; background:#fff1ce; border-radius:14px}
+    .switch{width:56px; height:30px; background:#d6c6a3; border-radius:999px; position:relative; box-shadow:inset 0 0 0 2px #cbb38a; cursor:pointer}
+    .knob{position:absolute; top:3px; left:3px; width:24px; height:24px; background:white; border-radius:999px; transition:transform .2s ease}
+    .switch.on{background:#b9e0b9}
+    .switch.on .knob{transform:translateX(26px)}
+
+    /* Toast */
+    .toast{position:absolute; bottom:88px; left:50%; transform:translateX(-50%); background:#2b2b2b; color:#fff; padding:10px 14px; border-radius:999px; opacity:0; pointer-events:none; transition:opacity .2s}
+    .toast.show{opacity:1}
+  </style>
 </head>
 <body>
-<div class="phone">
-  <div class="page active" id="page1">
-    <h1>Signup</h1>
-    <input type="text" placeholder="Username" />
-    <input type="password" placeholder="Password" />
-    <div class="nav">
-      <span></span>
-      <button class="button" onclick="showPage(2)">Next ➡️</button>
-    </div>
+  <div class="phone" role="application" aria-label="HomePlate mini app">
+    <div class="notch" aria-hidden="true"></div>
+    <header>
+      <button class="back" aria-label="Go back" title="Back" onclick="goBack()">←</button>
+      <h1 id="title">Dashboard</h1>
+    </header>
+
+    <main>
+      <!-- Dashboard -->
+      <section id="dashboard" class="screen active">
+        <div class="center" style="gap:22px">
+          <div class="card center" style="padding:22px; width:100%">
+            <div class="big">Jasmine</div>
+            <div class="sub">Welcome back! What would you like to do?</div>
+          </div>
+          <div class="grid">
+            <div class="tile" onclick="showScreen('profile')"><i>👤</i> Profile</div>
+            <div class="tile" onclick="showScreen('serve')"><i>⚡</i> QuickStart</div>
+            <div class="tile" onclick="showScreen('mealLog')"><i>🗒️</i> Meal Log</div>
+            <div class="tile" onclick="showScreen('settings')"><i>⚙️</i> Settings</div>
+            <div class="tile" onclick="showScreen('customize')"><i>🍳</i> Customize Meal</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile placeholder -->
+      <section id="profile" class="screen">
+        <div class="center" style="height:100%">
+          <div class="big">Profile</div>
+          <div class="card">Name: Jasmine<br/>Level: Beginner Cook</div>
+        </div>
+      </section>
+
+      <!-- Customize Meal -->
+      <section id="customize" class="screen">
+        <div class="center" style="height:100%">
+          <div class="big">Customize Meal</div>
+          <div class="card center" style="gap:12px; width:100%">
+            <div class="pref">Meal Preferences</div>
+            <div class="tagwrap" id="prefTags">
+              <span class="tag">Low spice</span>
+              <span class="tag">High protein</span>
+              <span class="tag">Budget</span>
+              <span class="tag">Vegetarian</span>
+              <span class="tag">15-min</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Serve the Delicious Meal -->
+      <section id="serve" class="screen">
+        <div class="center" style="height:100%">
+          <div class="card" style="width:100%; padding:18px">
+            <div class="slider" aria-label="Serve progress slider">
+              <div class="thumb" id="thumb"></div>
+            </div>
+          </div>
+          <div class="big" style="font-size:30px">Serve the delicious meal</div>
+          <button class="btn" onclick="showScreen('rating')">Next Step</button>
+          <div class="gesture">
+            <div class="finger" title="Drag"></div>
+            <div class="arrow" aria-hidden="true"></div>
+            <div class="arrow" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meal Rating & Feedback -->
+      <section id="rating" class="screen">
+        <div class="center" style="height:100%">
+          <div class="big">Meal Rating and Feedback</div>
+          <div class="stars" aria-label="Star rating">
+            <span class="star" data-v="1">⭐</span>
+            <span class="star" data-v="2">⭐</span>
+            <span class="star" data-v="3">⭐</span>
+            <span class="star" data-v="4">⭐</span>
+            <span class="star" data-v="5">⭐</span>
+          </div>
+          <textarea id="fb" placeholder="Tell us what worked well…"></textarea>
+          <button class="btn" onclick="submitFeedback()">Submit</button>
+        </div>
+      </section>
+
+      <!-- Trophy / Complete -->
+      <section id="trophy" class="screen">
+        <div class="center" style="height:100%">
+          <div style="font-size:80px">🏆</div>
+          <div class="big">Great Cook</div>
+          <div class="sub">Meal complete!</div>
+          <button class="btn" onclick="showScreen('dashboard')">Back to Home</button>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="screen">
+        <div class="center" style="gap:16px">
+          <div class="big">Settings</div>
+          <div class="list" style="width:100%">
+            <div class="row"><span>Notifications</span>
+              <div class="switch on" role="switch" aria-checked="true" onclick="toggleSwitch(this)"><div class="knob"></div></div>
+            </div>
+            <div class="row"><span>Dark mode</span>
+              <div class="switch" role="switch" aria-checked="false" onclick="toggleDark(this)"><div class="knob"></div></div>
+            </div>
+            <div class="row"><span>Measurement</span>
+              <button class="btn secondary" id="unitsBtn" onclick="toggleUnits()">Metric</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meal log placeholder -->
+      <section id="mealLog" class="screen">
+        <div class="center" style="height:100%">
+          <div class="big">Meal Log</div>
+          <div class="card">No meals yet. Start a QuickStart to cook your first dish!</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <button class="btn secondary" onclick="goBack()" aria-label="Back">← Back</button>
+      <button class="btn" onclick="goForward()" aria-label="Next">Next →</button>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
 
-  <div class="page" id="page2">
-    <h1>Home Page</h1>
-    <p>Welcome to Homeplate</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(1)">⬅️ Back</button>
-      <button class="button" onclick="showPage(3)">Next ➡️</button>
-    </div>
-  </div>
+  <script>
+    // Screen management with a navigation stack
+    const order = ["dashboard","customize","serve","rating","trophy","settings"]; // default linear forward order
+    const stack = []; // keeps history of visited screens for back
+    let current = "dashboard";
 
-  <div class="page" id="page3">
-    <h2>Ingredients</h2>
-    <input type="text" placeholder="Search raw ingredients" />
-    <div class="ingredients">
-      <div class="ingredient-card">Eggs</div>
-      <div class="ingredient-card">Milk</div>
-      <div class="ingredient-card">Flour</div>
-      <div class="ingredient-card">Onions</div>
-      <div class="ingredient-card">Tomatoes</div>
-      <div class="ingredient-card">Chicken</div>
-      <div class="ingredient-card">Garlic</div>
-      <div class="ingredient-card">Spinach</div>
-    </div>
-    <div class="nav">
-      <button class="button" onclick="showPage(2)">⬅️ Back</button>
-      <button class="button" onclick="showPage(4)">Next ➡️</button>
-    </div>
-  </div>
+    function setTitle(id){
+      const map={dashboard:"Dashboard", profile:"Profile", customize:"Customize", serve:"Serve", rating:"Rate Meal", trophy:"Great Cook", settings:"Settings", mealLog:"Meal Log"};
+      document.getElementById('title').textContent = map[id]||id;
+    }
 
-  <div class="page" id="page4">
-    <h2>Extra Page 1</h2>
-    <p>Content from photo 1</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(3)">⬅️ Back</button>
-      <button class="button" onclick="showPage(5)">Next ➡️</button>
-    </div>
-  </div>
+    function showScreen(id, push=true){
+      if(!document.getElementById(id)) return;
+      // hide current
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if(push && current) stack.push(current);
+      current = id; setTitle(id);
+    }
 
-  <div class="page" id="page5">
-    <h2>Extra Page 2</h2>
-    <p>Content from photo 2</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(4)">⬅️ Back</button>
-      <button class="button" onclick="showPage(6)">Next ➡️</button>
-    </div>
-  </div>
+    function goBack(){
+      if(stack.length){
+        const prev = stack.pop();
+        showScreen(prev,false);
+      } else {
+        toast('No previous screen');
+      }
+    }
 
-  <div class="page" id="page6">
-    <h2>Extra Page 3</h2>
-    <p>Content from photo 3</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(5)">⬅️ Back</button>
-      <button class="button" onclick="showPage(7)">Next ➡️</button>
-    </div>
-  </div>
+    function goForward(){
+      const idx = order.indexOf(current);
+      const next = order[idx+1];
+      if(next){ showScreen(next); } else { toast('End of flow'); }
+    }
 
-  <div class="page" id="page7">
-    <h2>Weekly Meal Planner</h2>
-    <div class="meal-days">
-      <div class="day-card">Fri - Pasta</div>
-      <div class="day-card">Sat - Wrap</div>
-      <div class="day-card">Sun - Smoothie</div>
-    </div>
-    <div class="nav">
-      <button class="button" onclick="showPage(6)">⬅️ Back</button>
-      <button class="button" onclick="showPage(8)">Next ➡️</button>
-    </div>
-  </div>
+    function toast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 1200);
+    }
 
-  <div class="page" id="page8">
-    <h2>Smart Grocery List</h2>
-    <div class="grocery-list">
-      <div class="grocery-item checked">Food</div>
-      <div class="grocery-item checked">Chicken</div>
-      <div class="grocery-item checked">Yogurt</div>
-      <div class="grocery-item checked">Rice</div>
-    </div>
-    <div class="nav">
-      <button class="button" onclick="showPage(7)">⬅️ Back</button>
-      <button class="button" onclick="showPage(9)">Next ➡️</button>
-    </div>
-  </div>
+    // Tags toggle
+    document.getElementById('prefTags').addEventListener('click', (e)=>{
+      if(e.target.classList.contains('tag')) e.target.classList.toggle('active');
+    });
 
-  <div class="page" id="page9">
-    <h2>Step 1</h2>
-    <p>🧅 Chop the onions finely</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(8)">⬅️ Back</button>
-      <button class="button" onclick="showPage(10)">Next ➡️</button>
-    </div>
-  </div>
+    // Slider thumb drag (visual only)
+    (function(){
+      const slider = document.querySelector('#serve .slider');
+      const thumb = document.getElementById('thumb');
+      let dragging=false;
+      thumb.addEventListener('mousedown', ()=>dragging=true);
+      window.addEventListener('mouseup', ()=>dragging=false);
+      window.addEventListener('mousemove', (e)=>{
+        if(!dragging) return;
+        const r = slider.getBoundingClientRect();
+        let x = Math.min(Math.max(e.clientX - r.left - 15, 8), r.width-38);
+        thumb.style.left = x + 'px';
+      });
+      // touch
+      thumb.addEventListener('touchstart', ()=>dragging=true);
+      window.addEventListener('touchend', ()=>dragging=false);
+      window.addEventListener('touchmove', (e)=>{
+        if(!dragging) return;
+        const touch = e.touches[0];
+        const r = slider.getBoundingClientRect();
+        let x = Math.min(Math.max(touch.clientX - r.left - 15, 8), r.width-38);
+        thumb.style.left = x + 'px';
+      });
+    })();
 
-  <div class="page" id="page10">
-    <h2>Step 2</h2>
-    <p>🍅 Slice the tomatoes</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(9)">⬅️ Back</button>
-      <button class="button" onclick="showPage(11)">Next ➡️</button>
-    </div>
-  </div>
+    // Stars
+    const starEls = Array.from(document.querySelectorAll('.star'));
+    starEls.forEach(s=>s.addEventListener('click', ()=>{
+      const v = +s.dataset.v; setStars(v);
+    }));
+    function setStars(v){
+      starEls.forEach(s=>s.classList.toggle('active', +s.dataset.v<=v));
+      document.getElementById('fb').placeholder = v>=4 ? 'Yum! What did you love?' : 'Tell us what we can improve…';
+    }
 
-  <div class="page" id="page11">
-    <h2>Step 3</h2>
-    <p>🍗 Marinate the chicken</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(10)">⬅️ Back</button>
-      <button class="button" onclick="showPage(12)">Next ➡️</button>
-    </div>
-  </div>
+    function submitFeedback(){
+      toast('Thanks for your feedback!');
+      setTimeout(()=>showScreen('trophy'), 500);
+    }
 
-  <div class="page" id="page12">
-    <h2>Step 4</h2>
-    <p>🍳 Cook everything together</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(11)">⬅️ Back</button>
-      <button class="button" onclick="showPage(13)">Next ➡️</button>
-    </div>
-  </div>
+    // Settings toggles
+    function toggleSwitch(el){ el.classList.toggle('on'); }
+    function toggleDark(el){
+      el.classList.toggle('on');
+      const dark = el.classList.contains('on');
+      document.body.style.background = dark ? '#1a1a1a' : 'var(--bg)';
+      document.querySelector('.phone').style.background = dark ? '#222' : '#fff7e7';
+      document.body.style.color = dark ? '#f6f3ec' : 'var(--text)';
+    }
+    function toggleUnits(){
+      const b=document.getElementById('unitsBtn');
+      b.textContent = b.textContent === 'Metric' ? 'Imperial' : 'Metric';
+      toast('Units: '+b.textContent);
+    }
 
-  <div class="page" id="page13">
-    <h2>Serving</h2>
-    <p>🍽 Serve hot with bread or rice</p>
-    <div class="nav">
-      <button class="button" onclick="showPage(12)">⬅️ Back</button>
-      <button class="button" onclick="alert('Recipe complete!')">Finish ✅</button>
-    </div>
-  </div>
-</div>
-
-<script>
-function showPage(num) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page' + num).classList.add('active');
-}
-</script>
+    // Keyboard support
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowLeft') goBack();
+      if(e.key==='ArrowRight') goForward();
+    });
+  </script>
 </body>
 </html>
-```
